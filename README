@@ -4,29 +4,41 @@ There are a few high level steps in using pipbench:
 3. Generating packages that correspond to the graph
 4. Generating handlers
 
-Graph Generation and Resizing: TODO
-    1. Generate Graph
-        // TODO, pull everything out of stats
-    2. Resize Graph
-        
+Graph Generation and Resizing:
+    We have provided the packages graph to use in pipbench/graph_resizing. It is recommend this is used unless update-to-date PyPI data is needed.
+    The graph provided was generated mid April 2017.
 
-Pibench
+    1. Generate Graph
+        This will generate the necesary import.json, install.json, edge.levels.json pkg-index.json.gz files that resizing needs.
+        Will take many days. Everything should be in this folder, but more cleanup is needed in the future.
+    
+    2. Resize Graph
+        python resize.py <number of packages>
+
+        Creates a packages graph  json spec that the rest of pipbench will use
+
+Pipbench
 1. Generate packages:
     1. Create a random file:
     dd bs=1024 count=100000 </dev/urandom >random.dat
     (You may have to increase count if generate_packages.py complains)
 
     2. Generate packages:
-    python3 generate_packages.py graph_generation/<package_graph_spec_file> <random_file>
+    python3 generate_packages.py <packages_graph_spec_file> <random_file>
     
     Creates a package tar.gz for each package in the graph, under ./web dir and the html indices to match,
     using the same dir structure that PyPI uses
+
+    3. Start local PyPI server:
+        1. Change the path to the web dir in the nginx.conf, must be absolute path, default is /tmp/web
+        2. Run nginx:
+        sudo nginx -c $(pwd)/nginx.conf
 
 2. Generate handlers:
     1. Create a number of imports per handler distribution file
     
     2. Generate handlers:
-    python3 generate_handlers.py graph_generation/<package_graph_spec_file> <num_imports_per_handler_file>
+    python3 generate_handlers.py <packages_graph_spec_file> <num_imports_per_handler_file>
     Flags:
     flag: default: desc:
     -d 1 number of handlers we want written out per handler
@@ -39,7 +51,7 @@ Pibench
     relfecting the actual distribution of handler->package imports
 
 To install a package from the local PyPI mirror
-pip2 install --extra-index-url http://localhost:8080/simple/ <package name>
+pip2 install --extra-index-url http://localhost:9199/simple/ <package name>
 
 To install from a generated requirements.txt:
 pip2 install -r test1/requirements.txt  --index-url http://localhost:9199/simple/
