@@ -1,0 +1,32 @@
+### Running a benchmark against a started cluster
+
+To run a benchmark, the script run_workload.py is used. This script takes
+a json config file as its onyl argument which specifies the workload. Example
+configs are provided in the workload_examples directory.
+
+At a high level, a workload consists of many client processess and a set of
+handlers. In sync mode, each process makes a requests to a handler, waits for
+the response, and repeats until the time elapsed has reached what is specified
+in the config.
+
+To specify a set of handlers, the config also takes the list of handlers. This
+is done by providing a file with each handler name on a separate line. The
+benchmark can also chose to execute only a subset of the handlers during each
+period of the benchmark, in the config this is called rotation. Note that each
+handler name listed will need to already exist in the registry.
+
+There are a few hardcoded constants in run_workload.py at the top of the file.
+Please change those to the appropriate values
+
+### Automating multiple benchmarks
+
+Because cache state is modified after running a benchmark, it will need to be
+cleared to demonstrate cold cache effects. The experimental script
+run_benchmark.py is provided. This script takes a file specifying the
+deployment configurations and the workloads to run for each configuration. Note
+that the script depends on sub scripts, such as rm.sh for teardown, run.sh for
+startup, and run_workload.py to actually run the benchmark. Simple rm.sh and
+run.sh scripts can be made from commands found on the open-lambda github
+README. When configured correctly, run_benchmark.py will gather all logs from
+the test, included worker logs.
+

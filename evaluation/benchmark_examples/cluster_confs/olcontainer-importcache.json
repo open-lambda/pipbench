@@ -1,0 +1,28 @@
+{
+	"registry": "local",
+	"sandbox": "olcontainer",
+	"max_runners": 1,
+	"reg_dir":  "/huge/registry",
+	"cluster_name": "/huge/cluster",
+	"index_host": "10.10.1.1",
+	"index_port": "9199",
+	"pkgs_dir":  "/huge/install_cache",
+	"handler_cache_size": 0,
+	"import_cache_size": 1000000000000,
+	"import_cache_buffer": 0,
+	"import_cache_dir": "/huge/cluster/import-cache",
+	"reg_cluster": null,
+	"worker_dir": "/huge/cluster/workers/default",
+	"OLContainer_init_path": "/users/khouck/open-lambda/olcontainer/olcontainer_init",
+	"OLContainer_handler_base": "/huge/cluster/base/lambda",
+	"OLContainer_cache_base": "/huge/cluster/base/cache-entry",
+	"worker_port": "?",
+	"sandbox_buffer": 0,
+	"cg_pool_size": 1000,
+	"Skip_pull_existing": false,
+	"sandbox_config": {
+		"processes": 10
+	},
+	"benchmark_log": ""
+}
+

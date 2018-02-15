@@ -1,0 +1,9 @@
+{
+    "log": "bench.log",
+    "type": "sync",
+    "wait": 0,
+    "runners": 10,
+    "minutes": 5,
+    "handlers": "handler_specs/1000handlers.txt",
+    "host": "10.10.1.2"
+}
