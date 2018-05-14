@@ -215,11 +215,11 @@ def get_handlers():
 
     return
 
-def main(log_path):
+def main():
     global log_queue
     log_queue = multiprocessing.Queue(10000)
 
-    logger = multiprocessing.Process(target=log_consumer, args=(log_path,))
+    logger = multiprocessing.Process(target=log_consumer, args=(config['log'],))
     logger.start()
 
     get_handlers()
@@ -230,17 +230,16 @@ def main(log_path):
 if __name__ == '__main__':
     global config 
 
-    if len(sys.argv) != 3:
+    if len(sys.argv) != 2:
         print('Usage: %s <config.json>' % sys.argv[0])
         sys.exit(1)
 
     with open(sys.argv[1]) as fd:
         config = json.load(fd)
 
-    log_path = sys.argv[2]
-    if os.path.exists(log_path):
+    if os.path.exists(config['log']):
         print('log file exists - please move it')
         sys.exit(1)
 
-    main(log_path)
+    main()
 
